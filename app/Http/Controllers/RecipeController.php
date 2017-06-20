@@ -56,9 +56,20 @@ class RecipeController extends Controller
         );
     }
 
+    /**
+     * PUT /recipes/{id}
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
+     */
     public function update(Request $request, $id): JsonResponse
     {
+        $recipe = Recipe::findOrFail($id);
 
+        $recipe->fill($request->all());
+        $recipe->save();
+
+        return response()->json(['data' => $recipe]);
     }
 
     public function rate(int $rating): JsonResponse
