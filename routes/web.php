@@ -12,8 +12,8 @@
 */
 
 $app->group(['prefix' => 'recipes/'], function ($app) {
-    $app->get('/','RecipeController@getRecipes'); //get all the routes
-    $app->post('/','RecipeController@store'); //store single route
-    $app->get('/{id}/', 'RecipeController@show'); //get single route
-    $app->put('/{id}/','RecipeController@update'); //update single route
+    $app->get('/','RecipeController@get');
+    $app->post('/','RecipeController@create');
+    $app->get('/{id}', 'RecipeController@show');
+    $app->put('/{id}','RecipeController@update');
 });
