@@ -16,4 +16,5 @@ $app->group(['prefix' => 'recipes/'], function ($app) {
     $app->post('/', ['as' => 'recipes.create', 'uses' => 'RecipeController@create']);
     $app->get('/{id}', ['as' => 'recipes.show', 'uses' => 'RecipeController@show']);
     $app->put('/{id}', ['as' => 'recipes.update', 'uses' => 'RecipeController@update']);
+    $app->put('/rate/{id}', ['as' => 'recipes.rate', 'uses' => 'RecipeController@rate']);
 });
