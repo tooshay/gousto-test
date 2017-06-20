@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Recipe;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * Class RecipeController
@@ -37,17 +38,30 @@ class RecipeController extends Controller
         return response()->json(['data' => $recipe]);
     }
 
+    /**
+     * POST /recipes
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function create(Request $request): JsonResponse
+    {
+        $recipe = Recipe::create($request->all());
+
+        return response()->json([
+                'created' => true,
+                201, [
+                    'Location' => route('recipes.show', ['id' => $recipe->id])
+                ]
+            ]
+        );
+    }
+
+    public function update(Request $request, $id): JsonResponse
+    {
+
+    }
+
     public function rate(int $rating): JsonResponse
-    {
-
-    }
-
-    public function update(): JsonResponse
-    {
-
-    }
-
-    public function create(): JsonResponse
     {
 
     }

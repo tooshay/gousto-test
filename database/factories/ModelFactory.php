@@ -23,7 +23,7 @@ $factory->define(App\Recipe::class, function (Faker\Generator $faker) {
         'created_at' => $faker->dateTimeThisMonth(),
         'updated_at' => $faker->dateTimeThisMonth(),
         'box_type' => $faker->randomElement($array = ['gourmet', 'vegetarian']),
-        'title' => $faker->title(),
+        'title' => $faker->text(),
         'slug' => $faker->slug(),
         'short_title' => $faker->text(),
         'marketing_description' => $faker->text(),

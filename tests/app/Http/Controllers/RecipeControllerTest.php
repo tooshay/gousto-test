@@ -1,7 +1,6 @@
 <?php
 
 use Laravel\Lumen\Testing\DatabaseMigrations;
-use Illuminate\Support\Facades\Artisan;
 
 class RecipeControllerTest extends TestCase
 {
