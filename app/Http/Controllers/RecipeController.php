@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Recipe;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 /**
  * Class RecipeController
@@ -12,21 +13,26 @@ use Illuminate\Http\Request;
  */
 class RecipeController extends Controller
 {
+    const LIMIT = 5;
     /**
-     * GET /recipes
+     * GET /recipes/{cuisine}
      *
-     * @param array $options
+     * @param string $cuisine
      * @return \Illuminate\Http\JsonResponse
      */
-    public function get(array $options = []): JsonResponse
+    public function get(string $cuisine = null): JsonResponse
     {
-        $recipes = Recipe::all();
+        if (!is_null($cuisine)) {
+            $recipes = Recipe::where('recipe_cuisine', $cuisine)->paginate(self::LIMIT);
+        } else {
+            $recipes = Recipe::all();
+        }
 
         return response()->json(['data' => $recipes]);
     }
 
     /**
-     * GET /recipes/{id}
+     * GET /recipes/show/{id}
      *
      * @param int $id
      * @return JsonResponse
@@ -82,8 +88,12 @@ class RecipeController extends Controller
     {
         $recipe = Recipe::findOrFail($id);
 
-        $recipe->rating = $request->get('rating');
-        $recipe->save();
+        try {
+            $recipe->rate($request->get('rating'));
+        } catch (Exception $e) {
+            return response()->json(dd($e->getMessage()));
+        }
+
 
         return response()->json(['data' => $recipe]);
     }

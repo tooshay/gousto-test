@@ -12,9 +12,9 @@
 */
 
 $app->group(['prefix' => 'recipes/'], function ($app) {
-    $app->get('/', ['as' => 'recipes.get', 'uses' => 'RecipeController@get']);
+    $app->get('/[{cuisine}]', ['as' => 'recipes.get', 'uses' => 'RecipeController@get']);
     $app->post('/', ['as' => 'recipes.create', 'uses' => 'RecipeController@create']);
-    $app->get('/{id}', ['as' => 'recipes.show', 'uses' => 'RecipeController@show']);
+    $app->get('/show/{id}', ['as' => 'recipes.show', 'uses' => 'RecipeController@show']);
     $app->put('/{id}', ['as' => 'recipes.update', 'uses' => 'RecipeController@update']);
     $app->put('/rate/{id}', ['as' => 'recipes.rate', 'uses' => 'RecipeController@rate']);
 });

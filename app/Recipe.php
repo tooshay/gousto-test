@@ -22,4 +22,32 @@ class Recipe extends Model
         'protein_source', 'preparation_type_mins', 'shelf_life_days', 'equipment_needed', 'origin_country',
         'recipe_cuisine', 'in_your_box', 'gousto_reference', 'rating'
     ];
+
+    private static $rules = array(
+        'rating' => 'numeric|min:0|max:5'
+    );
+
+    /**
+     * @param int $rating
+     * @return bool
+     * @throws \Exception
+     */
+    public function rate(int $rating)
+    {
+        if ($this->validate(['rating' => $rating])) {
+            $this->rating = $rating;
+            $this->save();
+
+            return true;
+        } else {
+            throw new \Exception('Rating must be numeric and between 0 and 5');
+        }
+    }
+
+    public function validate($data)
+    {
+        $v = \Validator::make($data, self::$rules);
+
+        return $v->passes();
+    }
 }
