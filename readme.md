@@ -23,10 +23,22 @@ $ curl -Ss http://getcomposer.org/installer | php
 $ php composer.phar install
 ```
 
+Unleash supplied .env file:
+
+```
+$ mv .env.example .env
+```
+
 Build SQLite DB and seed data:
 
 ```
 $ php artisan migrate && php artisan db:seed
+```
+
+Serve!
+
+```
+$ php -S localhost:8000 -t public
 ```
 
 # Unit Tests
