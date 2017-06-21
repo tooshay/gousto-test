@@ -28,7 +28,7 @@ class RecipeController extends Controller
             $recipes = Recipe::all();
         }
 
-        return response()->json(['data' => $recipes]);
+        return response()->json($recipes);
     }
 
     /**
@@ -41,7 +41,7 @@ class RecipeController extends Controller
     {
         $recipe = Recipe::findOrFail($id);
 
-        return response()->json(['data' => $recipe]);
+        return response()->json($recipe);
     }
 
     /**
@@ -55,10 +55,10 @@ class RecipeController extends Controller
 
         return response()->json([
                 'created' => true,
-                201, [
+                [
                     'Location' => route('recipes.show', ['id' => $recipe->id])
                 ]
-            ]
+            ], 201
         );
     }
 
@@ -75,7 +75,7 @@ class RecipeController extends Controller
         $recipe->fill($request->all());
         $recipe->save();
 
-        return response()->json(['data' => $recipe]);
+        return response()->json($recipe);
     }
 
     /**
@@ -91,10 +91,9 @@ class RecipeController extends Controller
         try {
             $recipe->rate($request->get('rating'));
         } catch (Exception $e) {
-            return response()->json(dd($e->getMessage()));
+            return response()->json($e->getMessage());
         }
 
-
-        return response()->json(['data' => $recipe]);
+        return response()->json($recipe);
     }
 }
