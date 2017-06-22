@@ -11,18 +11,14 @@ class RecipeControllerTest extends TestCase
     {
         factory('App\Recipe', 3)->create();
 
-        $this->get('/recipes')->seeStatusCode(200);
+        $this->get('/recipes/')->seeStatusCode(200);
     }
 
     /** @test **/
     public function get_recipes_should_return_some_recipes()
     {
-        $recipes = factory('App\Recipe', 3)->create();
-        $this->get('/recipes');
-
-        $content = json_decode($this->response->getContent(), true);
-
-        $this->assertArrayHasKey('data', $content);
+        $recipes = factory('App\Recipe', 2)->create();
+        $this->get('/recipes/');
 
         foreach ($recipes as $recipe) {
             $this->seeJson(['title' => $recipe->title]);
@@ -32,7 +28,9 @@ class RecipeControllerTest extends TestCase
     /** @test **/
     public function show_should_return_recipe()
     {
-        $this->get('/recipes/1')
+        factory('App\Recipe', 1)->create();
+
+        $this->get('/recipes/show/1')
             ->seeStatusCode(200);
     }
 }
